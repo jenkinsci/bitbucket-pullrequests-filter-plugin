@@ -29,7 +29,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class StringFilter implements TypeFilter<String> {
 
@@ -83,7 +82,7 @@ public class StringFilter implements TypeFilter<String> {
         return Arrays.stream(splittedPhrases)
                 .map(String::trim)
                 .filter(StringUtils::isNotBlank)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     protected Collection<Pattern> transformPhrasesToPattern(Collection<String> phrases, int flags) {
@@ -91,7 +90,7 @@ public class StringFilter implements TypeFilter<String> {
             return Collections.emptyList();
         }
 
-        return phrases.stream().map(phrase -> transformPhraseToPattern(phrase, flags)).collect(Collectors.toList());
+        return phrases.stream().map(phrase -> transformPhraseToPattern(phrase, flags)).toList();
     }
 
     protected Pattern transformPhraseToPattern(String phrase, int flags) {

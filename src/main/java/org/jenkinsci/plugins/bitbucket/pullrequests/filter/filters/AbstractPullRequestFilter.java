@@ -26,13 +26,13 @@ package org.jenkinsci.plugins.bitbucket.pullrequests.filter.filters;
 import com.cloudbees.jenkins.plugins.bitbucket.BitbucketSCMSourceRequest;
 import com.cloudbees.jenkins.plugins.bitbucket.PullRequestSCMHead;
 import com.cloudbees.jenkins.plugins.bitbucket.api.BitbucketPullRequest;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import jenkins.scm.api.SCMHead;
 import jenkins.scm.api.trait.SCMHeadFilter;
 import jenkins.scm.api.trait.SCMSourceRequest;
 import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.bitbucket.pullrequests.filter.utils.filters.TypeFilter;
 
-import javax.annotation.Nonnull;
 import java.io.IOException;
 
 /**
@@ -58,20 +58,19 @@ public abstract class AbstractPullRequestFilter<T> extends SCMHeadFilter {
      * {@inheritDoc}
      */
     @Override
-    public boolean isExcluded(@Nonnull SCMSourceRequest request, @Nonnull SCMHead head) throws IOException, InterruptedException {
-        if (request instanceof BitbucketSCMSourceRequest && head instanceof PullRequestSCMHead) {
-            BitbucketSCMSourceRequest req = (BitbucketSCMSourceRequest) request;
-            for (BitbucketPullRequest pullRequest : req.getPullRequests()) {
-                if (pullRequest.getSource().getBranch().getName().equals(((PullRequestSCMHead) head).getBranchName())) {
-                    BitbucketPullRequest fullPullRequest = req.getPullRequestById(Integer.parseInt(pullRequest.getId()));
-                    boolean isExluded = !isAccepted(fullPullRequest);
-                    if (isExluded) {
+    public boolean isExcluded(@NonNull SCMSourceRequest request, @NonNull SCMHead head) throws IOException, InterruptedException {
+        if (request instanceof BitbucketSCMSourceRequest scmReq && head instanceof PullRequestSCMHead scmHead) {
+            for (BitbucketPullRequest pullRequest : scmReq.getPullRequests()) {
+                if (pullRequest.getSource().getBranch().getName().equals(scmHead.getBranchName())) {
+                    BitbucketPullRequest fullPullRequest = scmReq.getPullRequestById(Integer.parseInt(pullRequest.getId()));
+                    boolean isExcluded = !isAccepted(fullPullRequest);
+                    if (isExcluded) {
                         String message = getMessage(fullPullRequest);
                         if (StringUtils.isNotBlank(message)) {
-                            req.listener().getLogger().format("  %s%n", message);
+                            scmReq.listener().getLogger().format("  %s%n", message);
                         }
                     }
-                    return isExluded;
+                    return isExcluded;
                 }
             }
         }
