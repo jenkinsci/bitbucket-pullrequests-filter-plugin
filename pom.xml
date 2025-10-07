@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>4.69</version>
+        <version>5.26</version>
         <relativePath />
     </parent>
 
@@ -18,17 +18,14 @@
         <changelist>999999-SNAPSHOT</changelist>
         <gitHubRepo>jenkinsci/bitbucket-pullrequests-filter-plugin</gitHubRepo>
 
-        <!-- Baseline Jenkins version you use to build the plugin. Users must have this version or newer to run. -->
-        <jenkins.version>2.361.4</jenkins.version>
-
-        <!-- Plugins -->
-        <bitbucket-branch-source.version>887.va_d359b_3d2d8d</bitbucket-branch-source.version>
+        <!-- https://www.jenkins.io/doc/developer/plugin-development/choosing-jenkins-baseline/ -->
+        <jenkins.baseline>2.492</jenkins.baseline>
+        <jenkins.version>${jenkins.baseline}.3</jenkins.version>
     </properties>
 
     <name>Bitbucket Pull Requests filter plugin</name>
     <description>Add traits to Cloudbees' BitBucket source plugin to filter or exclude multibranch Bitbucket Pull Requests by existing or missing phrase in name or description</description>
     <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
-    <!-- The default licence for Jenkins OSS Plugins is MIT. Substitute for the applicable one if needed. -->
 
     <scm>
         <connection>scm:git:https://github.com/${gitHubRepo}.git</connection>
@@ -40,7 +37,7 @@
     <licenses>
         <license>
             <name>MIT License</name>
-            <url>http://opensource.org/licenses/MIT</url>
+            <url>https://opensource.org/licenses/MIT</url>
         </license>
     </licenses>
 
@@ -70,7 +67,6 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>cloudbees-bitbucket-branch-source</artifactId>
-            <version>${bitbucket-branch-source.version}</version>
         </dependency>
 
         <dependency>
@@ -91,7 +87,6 @@
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest</artifactId>
-            <version>2.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -100,8 +95,8 @@
         <dependencies>
            <dependency>
                 <groupId>io.jenkins.tools.bom</groupId>
-                <artifactId>bom-2.361.x</artifactId>
-                <version>2102.v854b_fec19c92</version>
+                <artifactId>bom-${jenkins.baseline}.x</artifactId>
+                <version>5473.vb_9533d9e5d88</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
