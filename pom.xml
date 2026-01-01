@@ -22,7 +22,7 @@
         <jenkins.version>2.361.4</jenkins.version>
 
         <!-- Plugins -->
-        <bitbucket-branch-source.version>887.va_d359b_3d2d8d</bitbucket-branch-source.version>
+        <bitbucket-branch-source.version>937.2.3</bitbucket-branch-source.version>
     </properties>
 
     <name>Bitbucket Pull Requests filter plugin</name>
